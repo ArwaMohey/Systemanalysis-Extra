@@ -1,0 +1,22 @@
+{
+  "name": "user-profile-service",
+  "version": "1.0.0",
+  "description": "High-performance user profile fetch service with p95 < 200ms",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node src/server.js",
+    "test:performance": "k6 run performance-tests/user-profile-load-test.js"
+  },
+  "keywords": [
+    "performance",
+    "backend",
+    "express",
+    "low-latency"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
