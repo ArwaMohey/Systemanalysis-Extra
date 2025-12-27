@@ -8,6 +8,9 @@
  * 4. Optimized for tail latency - Consistent performance characteristics
  */
 
+// Configuration
+const CACHE_SIZE = 1000;
+
 class UserProfileCache {
   constructor() {
     this.cache = new Map();
@@ -22,8 +25,8 @@ class UserProfileCache {
     console.log('[Cache] Starting cache warming...');
     const startTime = Date.now();
 
-    // Generate 1000 sample users for realistic testing
-    for (let i = 1; i <= 1000; i++) {
+    // Generate sample users for realistic testing
+    for (let i = 1; i <= CACHE_SIZE; i++) {
       this.cache.set(i, {
         id: i,
         name: `User${i}`,
@@ -38,7 +41,7 @@ class UserProfileCache {
 
   /**
    * Get user profile by ID - O(1) operation
-   * @param {number} userId 
+   * @param {number|string} userId - User ID (will be converted to integer)
    * @returns {Object|null} User profile or null if not found
    */
   getUserProfile(userId) {
@@ -46,6 +49,7 @@ class UserProfileCache {
       throw new Error('Cache not initialized. Call warmCache() first.');
     }
 
+    // Convert to integer to handle both string and number inputs from routes
     const user = this.cache.get(parseInt(userId));
     return user || null;
   }

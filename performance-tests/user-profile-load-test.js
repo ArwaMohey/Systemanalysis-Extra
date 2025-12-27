@@ -47,16 +47,17 @@ export const options = {
   },
 };
 
-// Base URL - configure if needed
+// Configuration
 const BASE_URL = __ENV.BASE_URL || 'http://localhost:3000';
+const MAX_USER_ID = 1000; // Should match cache size in cache.js
 
 /**
  * Main test scenario
  * Fetches random user profiles to simulate realistic load
  */
 export default function() {
-  // Generate random user ID between 1 and 1000
-  const userId = Math.floor(Math.random() * 1000) + 1;
+  // Generate random user ID between 1 and MAX_USER_ID
+  const userId = Math.floor(Math.random() * MAX_USER_ID) + 1;
   const url = `${BASE_URL}/api/user/${userId}`;
 
   // Execute HTTP GET request
