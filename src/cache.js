@@ -50,7 +50,14 @@ class UserProfileCache {
     }
 
     // Convert to integer to handle both string and number inputs from routes
-    const user = this.cache.get(parseInt(userId));
+    const id = parseInt(userId);
+    
+    // Return null for invalid IDs (NaN or negative)
+    if (isNaN(id) || id < 1) {
+      return null;
+    }
+    
+    const user = this.cache.get(id);
     return user || null;
   }
 
