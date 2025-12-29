@@ -24,7 +24,7 @@
 
 This report examines the core components of the Linux operating system, focusing on process management, memory management, and the file system. Linux is a Unix-like operating system that uses a monolithic kernel design. The kernel handles all critical operations including process scheduling, memory allocation, and file system operations.
 
-The Linux kernel manages processes using the `task_struct` data structure, which serves as the Process Control Block (PCB). Each running program in Linux is represented as one or more processes, and the kernel schedules these processes on available CPU cores using sophisticated scheduling algorithms like the Completely Fair Scheduler (CFS).
+The Linux kernel uses the `task_struct` data structure as its Process Control Block (PCB). Each running program in Linux is one or more processes, and the kernel schedules these processes on available CPU cores using the Completely Fair Scheduler (CFS).
 
 Memory management in Linux uses virtual memory with paging, allowing processes to have isolated address spaces while efficiently sharing physical RAM. The virtual memory subsystem handles address translation, page faults, and memory protection.
 
@@ -156,7 +156,7 @@ Here are the most important fields in the Linux PCB:
 **File System Information:**
 - `struct files_struct *files`: Open file descriptors table
   - Contains array of `struct file` pointers
-  - Each entry represents an open file
+  - Each entry is an open file
 - `struct fs_struct *fs`: Current working directory and root directory
 - `struct nsproxy *nsproxy`: Namespace information
 
@@ -253,7 +253,7 @@ Figure 1 shows the process state transitions in Linux:
 
 **1. NEW**: Process is being created by fork(). The kernel allocates a new `task_struct` and copies parent's data. Not yet ready to run.
 
-**2. READY (TASK_RUNNING)**: Process is ready to execute and waiting in the runqueue. The process has all needed resources except CPU time. The state field in task_struct is set to 0 (TASK_RUNNING). The CFS scheduler maintains ready processes in a red-black tree sorted by `vruntime`.
+**2. READY (TASK_RUNNING)**: Process is ready to execute and waiting in the runqueue. The process has all needed resources except CPU time. The state field in task_struct is set to 0 (TASK_RUNNING). The CFS scheduler keeps ready processes in a red-black tree sorted by `vruntime`.
 
 **3. RUNNING (TASK_RUNNING)**: Process is currently executing on a CPU. Also uses TASK_RUNNING state. The `on_cpu` field in task_struct is 1. Only one process per CPU core can be in this state.
 
@@ -481,7 +481,7 @@ Low Address
 
 ### 6.3 Virtual Memory Areas (VMAs)
 
-The kernel divides each process's address space into Virtual Memory Areas (VMAs). Each VMA represents a contiguous memory region with uniform permissions.
+The kernel divides each process's address space into Virtual Memory Areas (VMAs). Each VMA is a contiguous memory region with the same permissions.
 
 **Example: Process memory mappings**
 
